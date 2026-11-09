@@ -15,12 +15,13 @@ import java.util.UUID;
 
 /**
  * Sneak and stand still for 1.5 seconds, then spend one XP point
- * to restore up to two durability every 0.1 seconds.
+ * to restore up to two durability every tick (0.05 seconds at 20 TPS).
  * Only the item in the main hand is repaired.
  */
 public final class RestingMendingPlugin extends JavaPlugin {
     private static final int REST_TICKS = 30;
-    private static final int REPAIR_TICKS = 2;
+    private static final int REPAIR_TICKS = 1;
+    private static final int SOUND_TICKS = 10;
     private static final double MOVEMENT_EPSILON_SQUARED = 1.0e-8;
     private final Map<UUID, RestState> states = new HashMap<>();
 
@@ -87,7 +88,10 @@ public final class RestingMendingPlugin extends JavaPlugin {
             meta.setDamage(Math.max(0, meta.getDamage() - 2));
             item.setItemMeta(meta);
             player.getInventory().setItemInMainHand(item);
-            player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.20f, 1.0f);
+            // Keep feedback steady and independent of the faster repair interval.
+            if ((state.ticks - REST_TICKS) % SOUND_TICKS == 0) {
+                player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.20f, 1.0f);
+            }
 
             if (!needsMending(item)) {
                 states.remove(id);
