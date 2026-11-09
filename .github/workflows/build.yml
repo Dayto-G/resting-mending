@@ -29,15 +29,15 @@ jobs:
       - name: Upload plugin JAR
         uses: actions/upload-artifact@v4
         with:
-          name: RestingMending-1.0.0
+          name: RestingMending-1.0.1
           path: build/libs/*.jar
           if-no-files-found: error
-      - name: Publish v1.0.0 release
+      - name: Publish v1.0.1 release
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create v1.0.0 build/libs/resting-mending-1.0.0.jar \
+          gh release create v1.0.1 build/libs/resting-mending-1.0.1.jar \
             --target "${{ github.sha }}" \
-            --title "Resting Mending v1.0.0" \
-            --notes "Initial release for Paper 26.3 (Java 25). Sneak and stand still for 1.5 seconds to slowly repair a damaged Mending item in your main hand. Repairs 2 durability per 1 XP every 0.5 seconds, with quiet vanilla XP sounds. Movement, stopping sneak, swapping items, full durability or no XP stop repairs."
+            --title "Resting Mending v1.0.1" \
+            --notes "Faster repairs for Paper 26.3 (Java 25): repair frequency increased fivefold. Sneak and stand still for 1.5 seconds to repair a damaged Mending item in your main hand. Repairs 2 durability per 1 XP every 0.1 seconds (2 ticks at 20 TPS), with quiet vanilla XP sounds. Movement, stopping sneak, swapping items, full durability or no XP stop repairs."

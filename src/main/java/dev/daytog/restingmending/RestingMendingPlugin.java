@@ -15,12 +15,12 @@ import java.util.UUID;
 
 /**
  * Sneak and stand still for 1.5 seconds, then spend one XP point
- * to restore up to two durability every 0.5 seconds.
+ * to restore up to two durability every 0.1 seconds.
  * Only the item in the main hand is repaired.
  */
 public final class RestingMendingPlugin extends JavaPlugin {
     private static final int REST_TICKS = 30;
-    private static final int REPAIR_TICKS = 10;
+    private static final int REPAIR_TICKS = 2;
     private static final double MOVEMENT_EPSILON_SQUARED = 1.0e-8;
     private final Map<UUID, RestState> states = new HashMap<>();
 
