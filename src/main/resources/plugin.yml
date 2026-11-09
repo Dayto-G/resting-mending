@@ -1,0 +1,6 @@
+name: RestingMending
+version: '${version}'
+main: dev.daytog.restingmending.RestingMendingPlugin
+api-version: '26.3'
+description: Slowly mend held items using stored XP while sneaking and standing still.
+author: Dayto-G
